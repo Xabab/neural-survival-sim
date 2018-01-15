@@ -2,16 +2,11 @@ package logic;
 
 import Jama.Matrix;
 
-import java.util.Random;
-import java.util.Random.*;
-
 public class Network {
     private Matrix []weights;
     private Matrix []neuronLayers;
     String []inputs;
     String []outputs;
-
-    public static final double MUTAGEN_MULTIPLIER = 0.05;
 
 
     public Network(String inputLayerNeurons[], int [] countOfHiddenLayersNeurons, String []outputLayerNeurons){
@@ -91,9 +86,25 @@ public class Network {
         for(Matrix m: weights){
             for(int i = 0; i < m.getRowDimension(); i++){
                 for(int j = 0; j < m.getColumnDimension(); j++){
-                    m.set(i, j, (m.get(i, j)*(1 + (Math.random()*2 - 1) * MUTAGEN_MULTIPLIER)));
+                    m.set(i, j, (m.get(i, j)*(1 + (Math.random()*2 - 1) * GameConstants.MUTAGEN_MULTIPLIER)));
                 }
             }
         }
+    }
+
+    public String[] getInputsList(){
+        return inputs;
+    }
+
+    public String[] getOutputsList(){
+        return outputs;
+    }
+
+    public Matrix[] getWeights(){
+        return weights;
+    }
+
+    public Matrix[] getNeuronLayers(){
+        return neuronLayers;
     }
 }

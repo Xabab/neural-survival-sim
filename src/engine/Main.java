@@ -6,7 +6,10 @@ package engine;/*
 
 import Jama.Matrix;
 import logic.Network;
+import logic.creatures.Creatures;
 import windows.Window;
+
+import java.util.List;
 
 /**
  *
@@ -14,6 +17,13 @@ import windows.Window;
  */
 public class Main {
     public static void main(String []args){
+        Creatures c = new Creatures();
+
+        List c1 = c.getCreatures();
+        List c2 = c.getCreatures();
+
+        System.out.println(c1 == c2);
+
 
 
         Window.init();

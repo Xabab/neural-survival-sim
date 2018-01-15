@@ -6,8 +6,8 @@ package input;/*
 
 import com.jogamp.newt.event.MouseEvent;
 import com.jogamp.newt.event.MouseListener;
-import gui.Gui;
-import gui.Button;
+import render.gui.Gui;
+import render.gui.Button;
 
 
 
