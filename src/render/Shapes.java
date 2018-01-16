@@ -22,22 +22,10 @@ public class Shapes {
         gl = d.getGL().getGL2();
     }
 
-    public static void drawCircle(int center_x, int center_y, int radius, int count_of_polygons){
-        if(gl == null) return;
-
-        gl.glBegin(GL2.GL_POLYGON);
-        gl.glLineWidth(1);
-        for (int i = 0; i < count_of_polygons; i++) {
-            gl.glVertex2d((center_x + sin(((2 * PI) / count_of_polygons) * i) * radius),
-                    (center_y + cos(((2 * PI) / count_of_polygons) * i) * radius));
-        }
-        gl.glEnd();
-    }
-
     public static void drawCircle(int center_x, int center_y, int radius, int count_of_polygons, float cR, float cG, float cB){
         if(gl == null) return;
 
-        gl.glColor3f(cR, cR, cB);
+        gl.glColor3f(cR, cG, cB);
         gl.glLineWidth(1);
         gl.glBegin(GL2.GL_POLYGON);
         for (int i = 0; i < count_of_polygons; i++) {
@@ -47,9 +35,10 @@ public class Shapes {
         gl.glEnd();
     }
 
-    public static void drawBox(int x, int y, int size_x, int size_y){
+    public static void drawBox(int x, int y, int size_x, int size_y, float cR, float cG, float cB){
         if(gl == null) return;
 
+        gl.glColor3f(cR, cG, cB);
         gl.glLineWidth(1);
         gl.glBegin(GL2.GL_POLYGON);
         {
@@ -61,10 +50,10 @@ public class Shapes {
         gl.glEnd();
     }
 
-    public static void drawLine(int x1, int y1, int x2, int y2, float width){
+    public static void drawLine(int x1, int y1, int x2, int y2, float width,  float cR, float cG, float cB){
         if(gl == null) return;
 
-
+        gl.glColor3f(cR, cG, cB);
         gl.glLineWidth(width);
 
         gl.glBegin(GL2.GL_LINES);

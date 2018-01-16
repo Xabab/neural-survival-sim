@@ -10,7 +10,7 @@ import input.MouseInput;
 public class Window {
 
     private static GLWindow window = null;
-    private static FPSAnimator animator;
+
 
     public static final int X = 800;
     public static final int Y = 600;
@@ -27,11 +27,6 @@ public class Window {
         window.addGLEventListener(new EventListener());                         //attaching event listener
         window.addMouseListener(new MouseInput());                              //attaching input listener
         window.addKeyListener(new KeyInput());
-
-
-
-//        animator = new FPSAnimator(window, 60 /* fps */);                       //setting up drawing loop
-//        animator.start();                                                       //starting drawing loop
 
         window.setVisible(true);                                                //showing up window
 

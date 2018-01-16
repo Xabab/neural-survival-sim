@@ -4,6 +4,7 @@ package engine;/*
  * and open the template in the editor.
  */
 
+import render.Shapes;
 import windows.Window;
 
 
@@ -32,6 +33,6 @@ public class GameLoop {
     }
 
     public static void loopIteration(){
-
+        Shapes.drawBox(140, 0, 660, 600, 0.16f, 0.16f, 0.16f);
     }
 }

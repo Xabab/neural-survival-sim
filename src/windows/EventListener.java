@@ -15,7 +15,7 @@ public class EventListener implements GLEventListener {                         
     public void init(GLAutoDrawable drawable) {
         GL2 gl = drawable.getGL().getGL2();                                     //object with all gl f()
 
-        gl.glClearColor(0.3f, 0.3f, 0.3f, 1);                                   //setting background color
+        gl.glClearColor(0.2f, 0.2f, 0.2f, 1);                                   //setting background color
 
         Shapes.init(drawable);
         Gui.init(drawable);
