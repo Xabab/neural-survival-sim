@@ -5,7 +5,6 @@ import logic.GameConstants;
 import logic.Network;
 
 import static java.lang.Math.*;
-import static logic.GameConstants.ACCELERATION;
 import static logic.GameConstants.BRAIN_INIT_RANGE;
 
 public class Creature {
@@ -78,7 +77,9 @@ public class Creature {
         readyToBirth = false;
         fitness -= GameConstants.BIRTH_FITNESS_COST;
 
-        return new Creature(this, true);
+        Creature c = new Creature(this, true);
+        c.direction = (Math.random() * 2 * PI);
+        return c;
     }
 
     public void updateInputs(double [] foodDistDirection) {
@@ -131,8 +132,8 @@ public class Creature {
     }
 
     public double getSpeedDouble(){
-        double x = speed.get(0, 0) - speed.get(0, 0);
-        double y = speed.get(0, 1) - speed.get(0, 1);
+        double x = speed.get(0, 0);
+        double y = speed.get(0, 1);
 
         return sqrt(x*x + y*y);
     }

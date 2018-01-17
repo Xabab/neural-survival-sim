@@ -3,7 +3,6 @@ package logic.objects;
 import logic.GameConstants;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 
@@ -20,15 +19,7 @@ public class Creatures {
     }
 
     public void deleteCreature(Creature c){
-        Iterator<Creature> iterator = creatures.iterator();
-        Creature i;
-        while(iterator.hasNext()){
-            i = iterator.next();
-            if(i == c) {
-                iterator.remove();
-                break;
-            }
-        }
+        creatures.removeIf(creature -> creature == c);
     }
 
     public void addCreature(){

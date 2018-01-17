@@ -1,13 +1,11 @@
 package logic.objects;
 
-import logic.GameConstants;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 public class Food {
-    private List<FoodPiece> food = new ArrayList<FoodPiece>();
+    private List<FoodPiece> food = new ArrayList<>();
 
     public List<FoodPiece> getFood() {
         return food;

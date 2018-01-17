@@ -12,15 +12,15 @@ import input.MouseInfo;
  * @author xabab
  */
 public abstract class Button{
-    float _cR = 1;
-    float _cG = 1;
-    float _cB = 1;
+    float _cR;
+    float _cG;
+    float _cB;
 
-    int _sizeX = 1;
-    int _sizeY = 1;
+    int _sizeX;
+    int _sizeY;
 
-    int _posX = 0;
-    int _posY = 0;
+    int _posX;
+    int _posY;
 
     String _title = null;
 

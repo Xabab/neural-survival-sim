@@ -5,10 +5,9 @@ package engine;/*
  */
 
 import logic.GameField;
-import render.Shapes;
 import render.gamefield.GameFieldDrawer;
+import render.gui.Gui;
 import windows.Window;
-import static logic.GameConstants.*;
 
 
 /**
@@ -39,7 +38,8 @@ public class GameLoop {
     }
 
     public static void loopIteration(){
-        g.iteration();
+        g.update();
         GameFieldDrawer.draw(g);
+        Gui.draw();
     }
 }

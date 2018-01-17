@@ -4,11 +4,7 @@ package engine;/*
  * and open the template in the editor.
  */
 
-import logic.GameConstants;
-import logic.GameField;
 import windows.Window;
-
-import static java.lang.Math.sqrt;
 
 /**
  *

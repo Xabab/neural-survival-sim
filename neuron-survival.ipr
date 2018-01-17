@@ -127,6 +127,15 @@
       </item>
     </group>
   </component>
+  <component name="ProjectDictionaryState">
+    <dictionary name="xabab">
+      <words>
+        <w>alowed</w>
+        <w>imput</w>
+        <w>numberic</w>
+      </words>
+    </dictionary>
+  </component>
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/neuron-survival.iml" filepath="$PROJECT_DIR$/neuron-survival.iml" />

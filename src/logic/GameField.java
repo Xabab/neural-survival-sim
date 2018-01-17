@@ -7,8 +7,10 @@ import logic.objects.Food;
 import logic.objects.FoodPiece;
 
 import java.util.Iterator;
+import java.util.function.Consumer;
 
 import static java.lang.Math.asin;
+import static java.lang.Math.atan;
 import static java.lang.Math.sqrt;
 import static logic.GameConstants.*;
 
@@ -19,91 +21,81 @@ public class GameField {
 
 
     //todo game speed
+    private int desiredIterationCount = 1;
 
-    public void iteration(){
+    public void iterationCount_pp(){
+        if(desiredIterationCount > 10) return;
+        desiredIterationCount++;
+    }
+
+    public void iterationCount_mm(){
+        if(desiredIterationCount <= 0) return;
+        desiredIterationCount--;
+    }
+
+
+    public void update(){
+        for (int i = 0; i < desiredIterationCount; i++) {
+            iteration();
+        }
+    }
+
+    private void iteration(){
         //spawn new if needed
         Creature temp;
         while(creatures.getCreatures().size() < MIN_CREATURES_COUNT) {
             temp = new Creature(Math.random()*(FIELD_SIZE_X), Math.random()*(FIELD_SIZE_Y));
             temp.brain.initRandom(-BRAIN_INIT_RANGE, BRAIN_INIT_RANGE);
-            temp.feed((Math.random()*2 - 1) * STARTING_FITNESS_RANGE);
             creatures.addCreature(temp);
         }
+
+
 
         //spawn food if needed
         while(food.getFood().size() < FOOD_COUNT) {
             food.addFood(Math.random()*(FIELD_SIZE_X), Math.random()*(FIELD_SIZE_Y));
         }
 
-        /*for(Creature c: creatures.getCreatures()){
-
+        for (Creature o1 : creatures.getCreatures()) {
             //update inputs
-            c.updateInputs(findClosestFood(c));
+            o1.updateInputs(findClosestFoodDistanceAndDirection(o1));
 
             //update creatures
-            c.updateCreature();
+            o1.updateCreature();
 
             //check collisions with walls
-            if(c.getXY().get(0, 0) < 0){
-                c.getXY().set(0, 0, 0);
-            }
-            else if(c.getXY().get(0, 0) > FIELD_SIZE_X){
-                c.getXY().set(0, 0, FIELD_SIZE_X);
+            if (o1.getXY().get(0, 0) < 0) {
+                o1.getXY().set(0, 0, 0);
+            } else if (o1.getXY().get(0, 0) > FIELD_SIZE_X) {
+                o1.getXY().set(0, 0, FIELD_SIZE_X);
             }
 
-            if(c.getXY().get(0, 1) < 0){
-                c.getXY().set(0, 1, 0);
-            }
-            else if(c.getXY().get(0, 1) > FIELD_SIZE_Y){
-                c.getXY().set(0, 1, FIELD_SIZE_Y);
+            if (o1.getXY().get(0, 1) < 0) {
+                o1.getXY().set(0, 1, 0);
+            } else if (o1.getXY().get(0, 1) > FIELD_SIZE_Y) {
+                o1.getXY().set(0, 1, FIELD_SIZE_Y);
             }
 
             //creature fitness degradation
-            c.feed(- (c.getSpeedDouble() * FOOD_PER_PX + FOOD_PER_ITERATION));
+            o1.feed(-(o1.getSpeedDouble() * FOOD_PER_PX + FOOD_PER_ITERATION));
 
-            //death
-            if(c.getFitness() < 0) creatures.deleteCreature(c);
-
-            if(c.brain.getNeuronLayers()[3].get(0, 2) > BIRTH_NEURON_ACTIVATION) creatures.addCreature(c.giveBirth());
-        }*/
-
-        Iterator i = creatures.getCreatures().listIterator();
-        while(i.hasNext()){
-            temp = (Creature)i.next();
-
-            //update inputs
-            temp.updateInputs(findClosestFood(temp));
-
-            //update creatures
-            temp.updateCreature();
-
-            //check collisions with walls
-            if(temp.getXY().get(0, 0) < 0){
-                temp.getXY().set(0, 0, 0);
-            }
-            else if(temp.getXY().get(0, 0) > FIELD_SIZE_X){
-                temp.getXY().set(0, 0, FIELD_SIZE_X);
-            }
-
-            if(temp.getXY().get(0, 1) < 0){
-                temp.getXY().set(0, 1, 0);
-            }
-            else if(temp.getXY().get(0, 1) > FIELD_SIZE_Y){
-                temp.getXY().set(0, 1, FIELD_SIZE_Y);
-            }
-
-            //creature fitness degradation
-            temp.feed(- (temp.getSpeedDouble() * FOOD_PER_PX + FOOD_PER_ITERATION));
-
-            //death
-            if(temp.getFitness() < 0) i.remove();
-
-            if(temp.brain.getNeuronLayers()[3].get(0, 2) > BIRTH_NEURON_ACTIVATION) creatures.addCreature(temp.giveBirth());
+            /*//give birth
+            if (o1.brain.getNeuronLayers()[3].get(0, 2) > BIRTH_NEURON_ACTIVATION) {
+                if (o1.getFitness() > BIRTH_FITNESS_COST) creatures.addCreature(o1.giveBirth());
+                else o1.feed(- BIRTH_FITNESS_COST);
+            }*/
         }
 
-        //debug
-        System.out.println(creatures.getCreatures().get(0).getFitness());
+        //give birth
+        creatures.getCreatures().iterator().forEachRemaining(creature -> {
+            if (creature.brain.getNeuronLayers()[3].get(0, 2) > BIRTH_NEURON_ACTIVATION) {
+                if (creature.getFitness() > BIRTH_FITNESS_COST) creatures.addCreature(creature.giveBirth());
+                else creature.feed(- BIRTH_FITNESS_COST);
+            }
+        });
 
+        //death from starvation
+        creatures.getCreatures().removeIf(o -> (o).getFitness() < 0);
     }
 
     public Food getFood() {
@@ -114,32 +106,49 @@ public class GameField {
         return creatures;
     }
 
-    private double[] findClosestFood(Creature c){
-        FoodPiece f = food.getFood().get(0);
+    private double[] findClosestFoodDistanceAndDirection(Creature c){
         double dist = 1000000; //"inf"
-        double out[] = findDistanceAndDirection(c.getXY(), f.getXY());
+        double out[] = new double[]{999999, 0};
+
+        Iterator i = food.getFood().listIterator();
+
+        FoodPiece p;
+        while(i.hasNext()){
+            p = (FoodPiece)i.next();
+            out = findDistanceAndDirection(c.getXY(), p.getXY());
+            if(out[0] < dist){
+                dist = out[0];
+            }
+            //check for food collisions and eat
+            if(out[0] < CREATURE_SIZE) {
+                c.feed(FOOD_COST);
+                i.remove();
+            }
+        }
+
+        /*
         for(FoodPiece p: food.getFood()){
             out = findDistanceAndDirection(c.getXY(), p.getXY());
             if(out[0] < dist){
                 dist = out[0];
-                f = p;
+            }
+            //check for food collisions and eat
+            if(out[0] < CREATURE_SIZE) {
+                c.feed(FOOD_COST);
+                food.deleteFood(p);
             }
         }
-
-        //check for food collisions and eat
-        if(out[0] < CREATURE_SIZE) {
-            c.feed(FOOD_COST);
-            food.deleteFood(f);
-        }
+        */
 
         return out;
     }
 
     private double[] findDistanceAndDirection(Matrix m1, Matrix m2){
-        double x = m1.get(0, 0) - m2.get(0, 0);
-        double y = m2.get(0, 1) - m2.get(0, 1);
+        double x = m2.get(0, 0) - m1.get(0, 0);
+        double y = m2.get(0, 1) - m1.get(0, 1);
 
-        return new double[]{sqrt(x*x + y*y), asin(y/x)};
+        return new double[]{sqrt(x*x + y*y), atan(y/x)};
+
     }
 
 }
