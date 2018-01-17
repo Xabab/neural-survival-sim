@@ -3,6 +3,7 @@ package windows;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
+import logic.GameField;
 import render.gui.Gui;
 import render.Shapes;
 

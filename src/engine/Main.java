@@ -4,12 +4,11 @@ package engine;/*
  * and open the template in the editor.
  */
 
-import Jama.Matrix;
-import logic.Network;
-import logic.creatures.Creatures;
+import logic.GameConstants;
+import logic.GameField;
 import windows.Window;
 
-import java.util.List;
+import static java.lang.Math.sqrt;
 
 /**
  *
@@ -17,13 +16,7 @@ import java.util.List;
  */
 public class Main {
     public static void main(String []args){
-
-
-
-
-
         Window.init();
         GameLoop.start();
-
     }
 }

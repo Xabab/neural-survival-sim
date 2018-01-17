@@ -11,6 +11,7 @@ import render.Shapes;
 
 
 public class Gui {
+    public static int MENU_WIDTH = 140;
 
     private static Shapes sh;
     private static GL2 gl = null;

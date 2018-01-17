@@ -4,8 +4,11 @@ package engine;/*
  * and open the template in the editor.
  */
 
+import logic.GameField;
 import render.Shapes;
+import render.gamefield.GameFieldDrawer;
 import windows.Window;
+import static logic.GameConstants.*;
 
 
 /**
@@ -14,6 +17,9 @@ import windows.Window;
  */
 public class GameLoop {
     private static boolean running = false;
+
+
+    static GameField g = new GameField();
 
     public static void start(){
 
@@ -33,6 +39,10 @@ public class GameLoop {
     }
 
     public static void loopIteration(){
-        Shapes.drawBox(140, 0, 660, 600, 0.16f, 0.16f, 0.16f);
+
+        Shapes.drawBox(Window.X - FIELD_SIZE_X, 0, FIELD_SIZE_X, FIELD_SIZE_Y, 0.16f, 0.16f, 0.16f);
+
+        GameFieldDrawer.draw(g);
+        g.iteration();
     }
 }
