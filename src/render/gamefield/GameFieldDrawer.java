@@ -15,9 +15,11 @@ public class GameFieldDrawer {
         for(Creature c: g.getCreatures().getCreatures()){
             Shapes.drawCircle(FIELD_X_OFFSET + (int)c.getXY().get(0, 0), (int)c.getXY().get(0, 1), (int)CREATURE_SIZE,
                     10, 0, (float) (1 * c.getFitness() / 100), 0);
-            Shapes.drawLine(FIELD_X_OFFSET + (int)c.getXY().get(0, 0), (int)c.getXY().get(0, 1),
-                    FIELD_X_OFFSET + (int)(c.getXY().get(0, 0) + cos(c.getDirection())),
-                    (int)(c.getXY().get(0, 1) + sin(c.getDirection())),
+            Shapes.drawLine(
+                    FIELD_X_OFFSET + (int)c.getXY().get(0, 0),
+                    (int)c.getXY().get(0, 1),
+                    FIELD_X_OFFSET + (int)(c.getXY().get(0, 0) + cos(c.getDirection())*CREATURE_SIZE),
+                    (int)(c.getXY().get(0, 1) + sin(c.getDirection())*CREATURE_SIZE),
                     1, 0.3f, 0.3f, 1f);
         }
 

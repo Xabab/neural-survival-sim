@@ -76,7 +76,9 @@ public class Network {
     }
 
     public void updateInputs(double []input){
-        if(input.length != neuronLayers[0].getColumnDimension() - 1) return;
+        if(input.length != neuronLayers[0].getColumnDimension() - 1 /* bias */) {
+            return;
+        }
         for (int i = 0; i < input.length; i++) {
             neuronLayers[0].set(0, i, input[i]);
         }

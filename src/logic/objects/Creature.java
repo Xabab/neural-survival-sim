@@ -2,18 +2,20 @@ package logic.objects;
 
 import Jama.Matrix;
 import logic.GameConstants;
+import logic.GameField;
 import logic.Network;
 
 import static java.lang.Math.*;
 import static logic.GameConstants.BRAIN_INIT_RANGE;
 
 public class Creature {
-    public final Network brain = new Network(new String[]{"FoodDist", "FoodDirection", "Fitness"}, new int[]{4, 4},
+    public final Network brain = new Network(new String[]{"FoodDist", "FoodDirection", "Fitness"}, new int[]{3, 3, 3},
             new String[]{"Accelerate", "Turn", "Birth"});;
 
     private boolean readyToBirth = false;
 
     private double fitness;
+    private double age = 0;
 
     private Matrix xy= new Matrix(1, 2, 0);
     private Matrix speed = new Matrix(1, 2, 0);
@@ -21,6 +23,15 @@ public class Creature {
 
     //private String name;
     //private String type = "Herbivore";
+
+    public void addAge(double aging){
+        age += abs(aging);
+    }
+
+    public double getAge() {
+        return age;
+    }
+
 
     public Creature(){
         fitness = GameConstants.STARTING_FITNESS;
@@ -91,15 +102,20 @@ public class Creature {
     }
 
     private void updateMoving(){
-        direction += GameConstants.CREATURE_TURNING_SPEED*brain.getNeuronLayers()[3].get(0,1);
+        direction += GameConstants.CREATURE_TURNING_SPEED*
+                brain.getNeuronLayers()[brain.getNeuronLayers().length - 1].get(0,1);
+
+        fitness -= abs(GameConstants.CREATURE_TURNING_SPEED*
+                brain.getNeuronLayers()[brain.getNeuronLayers().length - 1].get(0,1) )*
+                GameConstants.FOOD_PER_RAD;
 
         while(direction > PI) direction -= 2*PI;
         while(direction < PI) direction += 2*PI;
 
         double x = speed.get(0, 0) * (1 - GameConstants.SURFACE_ROUGHNESS)
-                + GameConstants.ACCELERATION*brain.getNeuronLayers()[3].get(0,0)*cos(direction);
+                + GameConstants.ACCELERATION*brain.getNeuronLayers()[brain.getNeuronLayers().length - 1].get(0,0)*cos(direction);
         double y = speed.get(0, 1) * (1 - GameConstants.SURFACE_ROUGHNESS)
-                + GameConstants.ACCELERATION*brain.getNeuronLayers()[3].get(0,0)*sin(direction);
+                + GameConstants.ACCELERATION*brain.getNeuronLayers()[brain.getNeuronLayers().length - 1].get(0,0)*sin(direction);
         double speed = sqrt(x*x + y*y);
 
         if(speed > GameConstants.CREATURE_SPEED) {
