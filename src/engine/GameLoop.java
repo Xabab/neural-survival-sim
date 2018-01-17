@@ -23,26 +23,23 @@ public class GameLoop {
 
     public static void start(){
 
-        Thread thread = new Thread(){
-            @Override
-            public void run(){
-                running = true;
-//                GLContext.makeCurrent();
+        Thread thread = new Thread(() -> {
+            running = true;
 
-                while(running){
-                    Window.render();
-                }
+            while(running){
+                Window.render();
             }
-        };
+        });
         thread.setName("GameLoop");
         thread.start();
     }
 
+    public static void stop(){
+        running = false;
+    }
+
     public static void loopIteration(){
-
-        Shapes.drawBox(Window.X - FIELD_SIZE_X, 0, FIELD_SIZE_X, FIELD_SIZE_Y, 0.16f, 0.16f, 0.16f);
-
-        GameFieldDrawer.draw(g);
         g.iteration();
+        GameFieldDrawer.draw(g);
     }
 }

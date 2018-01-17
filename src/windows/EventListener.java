@@ -32,6 +32,7 @@ public class EventListener implements GLEventListener {                         
 
     @Override
     public void dispose(GLAutoDrawable drawable) {
+        GameLoop.stop();
     }
 
     @Override

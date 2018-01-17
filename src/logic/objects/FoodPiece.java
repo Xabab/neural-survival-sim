@@ -1,12 +1,12 @@
 package logic.objects;
 
 import Jama.Matrix;
-import logic.GameConstants;
-
-import java.util.Iterator;
-import java.util.List;
 
 public class FoodPiece {
+    public Matrix getXY() {
+        return xy;
+    }
+
     Matrix xy = new Matrix(1, 2, 0);
 
     public FoodPiece(){
