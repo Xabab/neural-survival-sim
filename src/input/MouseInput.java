@@ -20,9 +20,8 @@ public class MouseInput implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         for(Button b: Gui.getMenu()){
-            //b.checkForClick();
+            b.checkForClick();
         }
-
     }
 
     @Override

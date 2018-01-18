@@ -9,7 +9,7 @@ import static java.lang.Math.*;
 import static logic.GameConstants.BRAIN_INIT_RANGE;
 
 public class Creature {
-    public final Network brain = new Network(new String[]{"FoodDist", "FoodDirection", "Fitness"}, new int[]{3, 3, 3},
+    public final Network brain = new Network(new String[]{"FoodDist", "FoodDirection", "Fitness"}, new int[]{3, 3},
             new String[]{"Accelerate", "Turn", "Birth"});;
 
     private boolean readyToBirth = false;

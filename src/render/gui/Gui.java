@@ -7,6 +7,7 @@ package render.gui;
 
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
+import logic.GameField;
 import render.Shapes;
 import render.Text;
 
@@ -14,25 +15,25 @@ import render.Text;
 public class Gui {
     public static int MENU_WIDTH = 140;
 
-    private static Shapes sh;
     private static GL2 gl = null;
-    private Gui(){}
+    private static GameField _g;
 
     public static void init(GLAutoDrawable d){
         gl = d.getGL().getGL2();
     }
+    public static void transferGameField(GameField g) { _g = g; }
 
     static final Button []menu = {
         new Button(10, 10 ,10, 10, 0, 0.3f, 0, "<<") {
             @Override
             public void onClick() {
-
+                _g.iterationCount_mm();
             }
         },
         new Button(30, 10 ,10, 10, 0, 0.3f, 0, ">>") {
             @Override
             public void onClick() {
-
+                _g.iterationCount_pp();
             }
         }
     };

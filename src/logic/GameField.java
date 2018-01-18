@@ -11,9 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static java.lang.Math.asin;
-import static java.lang.Math.atan;
-import static java.lang.Math.sqrt;
+import static java.lang.Math.*;
 import static logic.GameConstants.*;
 
 public class GameField {
@@ -84,7 +82,7 @@ public class GameField {
         for(Creature creature: new ArrayList<Creature>(creatures.getCreatures())){
             if (creature.brain.getNeuronLayers()[creature.brain.getNeuronLayers().length - 1].get(0, 2) > BIRTH_NEURON_ACTIVATION) {
                 if (creature.getFitness() > BIRTH_FITNESS_COST) creatures.getCreatures().add(creature.giveBirth());
-                else creature.feed(- BIRTH_FITNESS_COST);
+                //else creature.feed(- BIRTH_FITNESS_COST);
             }
         }
 
@@ -127,7 +125,7 @@ public class GameField {
         double x = m2.get(0, 0) - m1.get(0, 0);
         double y = m2.get(0, 1) - m1.get(0, 1);
 
-        return new double[]{sqrt(x*x + y*y), atan(y/x)};
+        return new double[]{sqrt(x*x + y*y), tanh(atan(y/x))};
     }
 
 }

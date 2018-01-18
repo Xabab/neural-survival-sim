@@ -24,6 +24,7 @@ public class GameLoop {
 
         Thread thread = new Thread(() -> {
             running = true;
+            Gui.transferGameField(g);
 
             while(running){
                 Window.render();
