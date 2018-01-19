@@ -90,7 +90,7 @@ public class Network {
         for(Matrix m: weights){
             for(int i = 0; i < m.getRowDimension(); i++){
                 for(int j = 0; j < m.getColumnDimension(); j++){
-                    m.set(i, j, (m.get(i, j)*(1 + (Math.random()*2 - 1) * GameConstants.MUTAGEN_MULTIPLIER)));
+                    m.set(i, j, (m.get(i, j) + (Math.random()*2 - 1) * GameConstants.MUTAGEN_MULTIPLIER));
                 }
             }
         }
