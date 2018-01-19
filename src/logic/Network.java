@@ -5,13 +5,13 @@ import Jama.Matrix;
 public class Network {
     private Matrix []weights;
     private Matrix []neuronLayers;
-    String []inputs;
-    String []outputs;
+    private String [] inputsNames;
+    private String [] outputsNames;
 
 
     public Network(String inputLayerNeurons[], int [] countOfHiddenLayersNeurons, String []outputLayerNeurons){
-        inputs = inputLayerNeurons;
-        outputs = outputLayerNeurons;
+        inputsNames = inputLayerNeurons;
+        outputsNames = outputLayerNeurons;
 
         neuronLayers = new Matrix[2 + countOfHiddenLayersNeurons.length];
         for (int i = 0; i < countOfHiddenLayersNeurons.length; i++) {
@@ -28,10 +28,10 @@ public class Network {
             weights[i] = new Matrix(neuronLayers[i].getColumnDimension(), neuronLayers[i+1].getColumnDimension());
         }
 
-        String []temp = new String[outputs.length + 1];
-        System.arraycopy(inputs, 0, temp, 0, outputs.length);
+        String []temp = new String[outputsNames.length + 1];
+        System.arraycopy(inputsNames, 0, temp, 0, outputsNames.length);
         temp[temp.length - 1] = "Bias (const)";
-        inputs = temp;
+        inputsNames = temp;
     }
 
     public Network(Network n){
@@ -45,11 +45,11 @@ public class Network {
             neuronLayers[i] = n.neuronLayers[i].copy();
         }
 
-        inputs = new String[n.inputs.length];
-        System.arraycopy(n.inputs, 0, inputs, 0, n.inputs.length);
+        inputsNames = new String[n.inputsNames.length];
+        System.arraycopy(n.inputsNames, 0, inputsNames, 0, n.inputsNames.length);
 
-        outputs = new String[n.outputs.length];
-        System.arraycopy(n.outputs, 0, outputs, 0, n.outputs.length);
+        outputsNames = new String[n.outputsNames.length];
+        System.arraycopy(n.outputsNames, 0, outputsNames, 0, n.outputsNames.length);
     }
 
     public void initRandom(double min, double max){
@@ -97,11 +97,11 @@ public class Network {
     }
 
     public String[] getInputsList(){
-        return inputs;
+        return inputsNames;
     }
 
     public String[] getOutputsList(){
-        return outputs;
+        return outputsNames;
     }
 
     public Matrix[] getWeights(){
