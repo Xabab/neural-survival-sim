@@ -9,7 +9,7 @@ import static java.lang.Math.*;
 import static logic.GameConstants.*;
 
 public class GameFieldDrawer {
-    static public void draw(logic.GameField g){
+    static public void draw(logic.Game g){
         Shapes.drawBox(Window.X - FIELD_SIZE_X, 0, FIELD_SIZE_X, FIELD_SIZE_Y, 0.16f, 0.16f, 0.16f);
 
         for(Creature c: g.getCreatures().getCreatures()){

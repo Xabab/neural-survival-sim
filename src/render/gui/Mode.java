@@ -6,7 +6,7 @@ package render.gui;/*
 
 
 public class Mode {
-    public enum MODE {NONE};
+    public enum MODE {NONE, CHOSE_CREATURE};
 
     private static MODE mode = MODE.NONE;
 

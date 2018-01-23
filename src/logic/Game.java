@@ -42,7 +42,7 @@ public class Game extends GameField {
         Creature temp;
         while(creatures.getCreatures().size() < MIN_CREATURES_COUNT) {
             temp = new Creature(Math.random()*(FIELD_SIZE_X), Math.random()*(FIELD_SIZE_Y));
-            temp.brain.initRandom(-BRAIN_INIT_RANGE, BRAIN_INIT_RANGE);
+            temp.initRandom(-BRAIN_INIT_RANGE, BRAIN_INIT_RANGE);
             creatures.addCreature(temp);
         }
 
@@ -51,33 +51,33 @@ public class Game extends GameField {
             food.addFood(Math.random()*(FIELD_SIZE_X), Math.random()*(FIELD_SIZE_Y));
         }
 
-        for (Creature o1 : creatures.getCreatures()) {
+        for (Creature c : creatures.getCreatures()) {
             //update inputs
-            o1.updateInputs(findClosestFoodDistanceAndDirection(o1));
+            c.updateInputs(findClosestFoodDistanceAndDirection(c));
 
             //update creatures
-            o1.updateCreature();
+            c.updateCreature();
 
             //check collisions with walls
-            if (o1.getXY().get(0, 0) < 0) {
-                o1.getXY().set(0, 0, 0);
-            } else if (o1.getXY().get(0, 0) > FIELD_SIZE_X) {
-                o1.getXY().set(0, 0, FIELD_SIZE_X);
+            if (c.getXY().get(0, 0) < 0) {
+                c.getXY().set(0, 0, 0);
+            } else if (c.getXY().get(0, 0) > FIELD_SIZE_X) {
+                c.getXY().set(0, 0, FIELD_SIZE_X);
             }
 
-            if (o1.getXY().get(0, 1) < 0) {
-                o1.getXY().set(0, 1, 0);
-            } else if (o1.getXY().get(0, 1) > FIELD_SIZE_Y) {
-                o1.getXY().set(0, 1, FIELD_SIZE_Y);
+            if (c.getXY().get(0, 1) < 0) {
+                c.getXY().set(0, 1, 0);
+            } else if (c.getXY().get(0, 1) > FIELD_SIZE_Y) {
+                c.getXY().set(0, 1, FIELD_SIZE_Y);
             }
 
             //creature fitness degradation
-            o1.feed(-(o1.getSpeedDouble() * FOOD_PER_PX + FOOD_PER_ITERATION));
+            c.feed(-(c.getSpeedDouble() * FOOD_PER_PX + FOOD_PER_ITERATION));
         }
 
         //give birth
         for(Creature creature: new ArrayList<Creature>(creatures.getCreatures())){
-            if (creature.brain.getNeuronLayers()[creature.brain.getNeuronLayers().length - 1].get(0, 2) > BIRTH_NEURON_ACTIVATION) {
+            if (creature.getNeuronLayers()[creature.getNeuronLayers().length - 1].get(0, 2) > BIRTH_NEURON_ACTIVATION) {
                 if (creature.getFitness() > BIRTH_FITNESS_COST) creatures.getCreatures().add(creature.giveBirth());
                 //else creature.feed(- BIRTH_FITNESS_COST);
             }

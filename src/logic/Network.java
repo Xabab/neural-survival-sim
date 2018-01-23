@@ -67,7 +67,8 @@ public class Network {
             neuronLayers[i + 1] = neuronLayers[i].copy().times(weights[i]);
             for (int j = 0; j < neuronLayers[i + 1].getColumnDimension(); j++) {
                 neuronLayers[i + 1].set(0, j, Math.tanh(neuronLayers[i + 1].get(0, j)));
-                neuronLayers[i].set(0, neuronLayers[i].getColumnDimension() - 1, 1); //setting bias back to 1 (hack)
+                if(i != weights.length - 1)
+                    neuronLayers[i + 1].set(0, neuronLayers[i].getColumnDimension() - 1, 1); //setting bias back to 1 (hack)
 
             }
         }

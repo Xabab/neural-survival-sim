@@ -8,10 +8,7 @@ import logic.Network;
 import static java.lang.Math.*;
 import static logic.GameConstants.BRAIN_INIT_RANGE;
 
-public class Creature {
-    public final Network brain = new Network(new String[]{"FoodDist", "FoodDirection", "Fitness"}, new int[]{3, 3},
-            new String[]{"Accelerate", "Turn", "Birth"});;
-
+public class Creature extends Network{
     private boolean readyToBirth = false;
 
     private double fitness;
@@ -34,11 +31,15 @@ public class Creature {
 
 
     public Creature(){
+        super(new String[]{"FoodDist", "FoodDirection", "Fitness"}, new int[]{3, 3},
+                new String[]{"Accelerate", "Turn", "Birth"});
         fitness = GameConstants.STARTING_FITNESS;
         direction = ((Math.random()*2)-1)*Math.PI*2;
     }
 
     public Creature(double x, double y){
+        super(new String[]{"FoodDist", "FoodDirection", "Fitness"}, new int[]{3, 3},
+                new String[]{"Accelerate", "Turn", "Birth"});
         fitness = GameConstants.STARTING_FITNESS;
         xy.set(0, 0, x);
         xy.set(0, 1, y);
@@ -46,17 +47,19 @@ public class Creature {
     }
 
     public Creature(Creature c, boolean child){
+        super(new String[]{"FoodDist", "FoodDirection", "Fitness"}, new int[]{3, 3},
+                new String[]{"Accelerate", "Turn", "Birth"});
         xy = c.xy.copy();
 
         if(child) {
-            brain.mutate();
+            mutate();
             fitness = GameConstants.STARTING_FITNESS;
             direction = ((Math.random()*2)-1)*Math.PI*2;
         }
         else {
             fitness = c.fitness;
             direction = c.direction;
-            brain.initRandom(-BRAIN_INIT_RANGE, BRAIN_INIT_RANGE);
+            initRandom(-BRAIN_INIT_RANGE, BRAIN_INIT_RANGE);
         }
     }
 
@@ -94,28 +97,24 @@ public class Creature {
     }
 
     public void updateInputs(double [] foodDistDirection) {
-        brain.updateInputs(new double[]{foodDistDirection[0], foodDistDirection[1], fitness});
-    }
-
-    private void updateBrain(){
-        brain.calculate();
+        super.updateInputs(new double[]{foodDistDirection[0], foodDistDirection[1], fitness});
     }
 
     private void updateMoving(){
         direction += GameConstants.CREATURE_TURNING_SPEED*
-                brain.getNeuronLayers()[brain.getNeuronLayers().length - 1].get(0,1);
+                getNeuronLayers()[getNeuronLayers().length - 1].get(0,1);
 
         fitness -= abs(GameConstants.CREATURE_TURNING_SPEED*
-                brain.getNeuronLayers()[brain.getNeuronLayers().length - 1].get(0,1) )*
+                getNeuronLayers()[getNeuronLayers().length - 1].get(0,1) )*
                 GameConstants.FOOD_PER_RAD;
 
         while(direction > PI) direction -= 2*PI;
         while(direction < PI) direction += 2*PI;
 
         double x = speed.get(0, 0) * (1 - GameConstants.SURFACE_ROUGHNESS)
-                + GameConstants.ACCELERATION*brain.getNeuronLayers()[brain.getNeuronLayers().length - 1].get(0,0)*cos(direction);
+                + GameConstants.ACCELERATION*getNeuronLayers()[getNeuronLayers().length - 1].get(0,0)*cos(direction);
         double y = speed.get(0, 1) * (1 - GameConstants.SURFACE_ROUGHNESS)
-                + GameConstants.ACCELERATION*brain.getNeuronLayers()[brain.getNeuronLayers().length - 1].get(0,0)*sin(direction);
+                + GameConstants.ACCELERATION*getNeuronLayers()[getNeuronLayers().length - 1].get(0,0)*sin(direction);
         double speed = sqrt(x*x + y*y);
 
         if(speed > GameConstants.CREATURE_SPEED) {
@@ -134,7 +133,7 @@ public class Creature {
     }
 
     public void updateCreature(){
-        updateBrain();
+        calculate();
         updateMoving();
         move();
     }

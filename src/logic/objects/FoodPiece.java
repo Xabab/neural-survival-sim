@@ -4,7 +4,7 @@ import Jama.Matrix;
 
 public class FoodPiece {
     public Matrix getXY() {
-        return xy;
+        return xy.copy();
     }
 
     Matrix xy = new Matrix(1, 2, 0);

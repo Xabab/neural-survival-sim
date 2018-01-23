@@ -4,7 +4,7 @@ package engine;/*
  * and open the template in the editor.
  */
 
-import logic.GameField;
+import logic.Game;
 import render.gamefield.GameFieldDrawer;
 import render.gui.Gui;
 import windows.Window;
@@ -18,7 +18,7 @@ public class GameLoop {
     private static boolean running = false;
 
 
-    static GameField g = new GameField();
+    static Game g = new Game();
 
     public static void start(){
 

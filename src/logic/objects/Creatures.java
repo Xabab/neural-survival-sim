@@ -24,14 +24,14 @@ public class Creatures {
 
     public void addCreature(){
         Creature c = new Creature();
-        c.brain.initRandom(-GameConstants.BRAIN_INIT_RANGE, GameConstants.BRAIN_INIT_RANGE);
+        c.initRandom(-GameConstants.BRAIN_INIT_RANGE, GameConstants.BRAIN_INIT_RANGE);
 
         creatures.add(c);
     }
 
     public void addCreature(double x, double y){
         Creature c = new Creature(x, y);
-        c.brain.initRandom(-GameConstants.BRAIN_INIT_RANGE, GameConstants.BRAIN_INIT_RANGE);
+        c.initRandom(-GameConstants.BRAIN_INIT_RANGE, GameConstants.BRAIN_INIT_RANGE);
 
         creatures.add(c);
     }
