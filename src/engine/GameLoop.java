@@ -18,7 +18,17 @@ public class GameLoop {
     private static boolean running = false;
 
 
-    static Game g = new Game();
+    public static Game getGame() {
+        return g;
+    }
+
+// --Commented out by Inspection START (24.04.18 12:24):
+//    public static void setG(Game g) {
+//        GameLoop.g = g;
+//    }
+// --Commented out by Inspection STOP (24.04.18 12:24)
+
+    static private Game g = new Game();
 
     public static void start(){
 

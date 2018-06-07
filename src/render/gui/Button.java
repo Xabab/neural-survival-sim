@@ -24,15 +24,17 @@ public abstract class Button{
 
     String _title = null;
 
-    public Button(int posX, int posY, int sizeX, int sizeY, float cR ,float cG, float cB){
-    _cR = cR;
-    _cG = cG;
-    _cB = cB;
-    _sizeX = sizeX;
-    _sizeY = sizeY;
-    _posX = posX;
-    _posY = posY;
-    }
+// --Commented out by Inspection START (24.04.18 12:24):
+//    public Button(int posX, int posY, int sizeX, int sizeY, float cR ,float cG, float cB){
+//    _cR = cR;
+//    _cG = cG;
+//    _cB = cB;
+//    _sizeX = sizeX;
+//    _sizeY = sizeY;
+//    _posX = posX;
+//    _posY = posY;
+//    }
+// --Commented out by Inspection STOP (24.04.18 12:24)
 
     public Button(int posX, int posY, int sizeX, int sizeY, float cR ,float cG, float cB, String title){
     _cR = cR;

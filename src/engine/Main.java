@@ -10,6 +10,8 @@ import windows.Window;
  *
  * @author xabab
  */
+
+/*ABANDON ALL HOPE YE WHO ENTER HERE*/
 public class Main {
     public static void main(String []args){
         Window.init();

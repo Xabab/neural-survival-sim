@@ -13,7 +13,7 @@ import render.Text;
 
 
 public class Gui {
-    public static int MENU_WIDTH = 140;
+    public static final int MENU_WIDTH = 140;
 
     private static GL2 gl = null;
     private static Game _g;
@@ -23,19 +23,37 @@ public class Gui {
     }
     public static void transferGameField(Game g) { _g = g; }
 
-    static final Button []menu = {
-        new Button(10, 10 ,10, 10, 0, 0.3f, 0, "<<") {
+    private static final Button []menu = {
+        new Button(10, 10 ,30, 30, 0, 0.3f, 0, "<<") {
             @Override
             public void onClick() {
                 _g.iterationCount_mm();
             }
         },
-        new Button(30, 10 ,10, 10, 0, 0.3f, 0, ">>") {
+        new Button(50, 10 ,30, 30, 0, 0.3f, 0, ">>") {
             @Override
             public void onClick() {
                 _g.iterationCount_pp();
             }
+        },
+        new Button(10, 50 ,70, 20, 0, 0.3f, 0, "Chose") {
+            @Override
+            public void onClick() {
+                if (Mode.getMode() == Mode.MODE.CHOSE_CREATURE) {
+                    this._cR = 0;
+                    this._cG = 0.3f;
+                    this._cB = 0;
+                    Mode.setMode(Mode.MODE.NONE);
+                }
+                else {
+                    this._cR = 1;
+                    this._cG = 0.3f;
+                    this._cB = 0;
+                    Mode.setMode(Mode.MODE.CHOSE_CREATURE);
+                }
+            }
         }
+
     };
 
     public static void draw(){
@@ -43,7 +61,7 @@ public class Gui {
         for(Button b: menu){
             gl.glColor3f(b.get_cR(), b.get_cG(), b.get_cB());
             Shapes.drawBox(b.get_posX(), b.get_posY(), b.get_sizeX(), b.get_sizeY(), b._cR, b._cG, b._cB);
-            Text.text(b.get_posX() + 3, b.get_posY() + 15, b.get_title(), 1f, 1f, 1f);
+            Text.text(b.get_posX() + 3, b.get_posY() + 8, b.get_title(), 1f, 1f, 1f);
         }
     }
 

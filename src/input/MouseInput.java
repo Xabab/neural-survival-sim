@@ -6,9 +6,12 @@ package input;/*
 
 import com.jogamp.newt.event.MouseEvent;
 import com.jogamp.newt.event.MouseListener;
+import engine.GameLoop;
 import render.gui.Gui;
 import render.gui.Button;
+import render.gui.Mode;
 
+import static logic.GameConstants.FIELD_X_OFFSET;
 
 
 /**
@@ -17,11 +20,25 @@ import render.gui.Button;
  */
 public class MouseInput implements MouseListener {
 
+    private boolean pressed = false;
+
     @Override
     public void mouseClicked(MouseEvent e) {
+        if(pressed) return;
+
         for(Button b: Gui.getMenu()){
             b.checkForClick();
         }
+        switch(Mode.getMode()){
+            default:
+                break;
+            case CHOSE_CREATURE:
+                GameLoop.getGame().chooseCreature(e.getX() - FIELD_X_OFFSET, e.getY());
+                break;
+        }
+
+        pressed = true;
+
     }
 
     @Override
@@ -38,6 +55,7 @@ public class MouseInput implements MouseListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        pressed = false;
     }
 
     @Override

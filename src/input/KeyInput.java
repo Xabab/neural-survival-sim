@@ -16,9 +16,9 @@ import render.Shapes;
  */
 public class KeyInput implements KeyListener{
 
-    static boolean _pressed;
-    static String numberic_imput_temp = "";
-    static final String ALOWED_NUMBERIC_INPUT = "-1234567890";
+    private static boolean _pressed;
+    // --Commented out by Inspection (24.04.18 12:24):static String numberic_imput_temp = "";
+    // --Commented out by Inspection (24.04.18 12:24):static final String ALOWED_NUMBERIC_INPUT = "-1234567890";
 
     @Override
     public void keyPressed(KeyEvent e) {
