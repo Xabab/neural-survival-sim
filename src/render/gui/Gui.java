@@ -35,25 +35,7 @@ public class Gui {
             public void onClick() {
                 _g.iterationCount_pp();
             }
-        },
-        new Button(10, 50 ,70, 20, 0, 0.3f, 0, "Chose") {
-            @Override
-            public void onClick() {
-                if (Mode.getMode() == Mode.MODE.CHOSE_CREATURE) {
-                    this._cR = 0;
-                    this._cG = 0.3f;
-                    this._cB = 0;
-                    Mode.setMode(Mode.MODE.NONE);
-                }
-                else {
-                    this._cR = 1;
-                    this._cG = 0.3f;
-                    this._cB = 0;
-                    Mode.setMode(Mode.MODE.CHOSE_CREATURE);
-                }
-            }
         }
-
     };
 
     public static void draw(){
